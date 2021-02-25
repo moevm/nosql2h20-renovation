@@ -1,0 +1,68 @@
+<html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    <head>
+        <title>Строительная фирма</title>
+    </head>
+    <body>
+        <h1>Заказы</h1>
+
+        <table style="width:100%" id="orders">
+          <tr>
+              <th>Номер заказа</th>
+              <th>Бригада</th>
+              <th>Стоимость</th>
+              <th>Материалы</th>
+              <th>Состояние</th>
+          </tr>
+            {% for order in orders %}
+                <tr id="{{ order.id }}" {% if order.is_done %} style="background-color: #50DD37" {% endif %}>
+                    <td>{{ order.number }}</td>
+                    <td>{{ order.brigade.single().number }}</td>
+                    <td>{{ order.cost }}</td>
+
+                    <td>
+                        <table class="inner_table">
+                        {% for material in order.material.all() %}
+                            <tr><td>{{ material.name }} - {{ order.material.relationship(material).count }}</td></tr>
+                        {% endfor %}
+                        </table>
+                    </td>
+
+                    <td>
+                        <label>Закончен?
+                            <input type="checkbox" class="is_done" {% if order.is_done %}
+                                   checked
+                            {% endif %}"
+                            >
+                        </label>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div id="logs"></div>
+
+        <a href="orders/create">
+           <button>Добавить</button>
+        </a>
+    </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+    $('.is_done').change(function(){
+        var value = $(this).prop('checked');
+        var order_id = $(this).closest('tr').attr('id')
+        $.ajax({
+            type: "post",
+            url: "/orders/set_done",
+            data: JSON.stringify({
+                'is_done': value,
+                'order_id': order_id
+            }),
+            success: function (msg) {
+                $('#logs').append('<p>Обновлено!</p>')
+            }
+        });
+
+    })
+    </script>
+</html>

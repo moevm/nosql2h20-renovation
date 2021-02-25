@@ -1,0 +1,6 @@
+,_id,_labels,birth_date,cost,is_done,name,number,passport,position,_start,_end,_type,count
+15,17.0,:Material,,,,Песок,,,,,,,
+16,18.0,:Material,,,,Цемент,,,,,,,
+17,19.0,:Material,,,,Щебень,,,,,,,
+18,20.0,:Material,,,,Балки,,,,,,,
+19,21.0,:Material,,,,Арматура,,,,,,,
