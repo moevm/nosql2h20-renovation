@@ -1,0 +1,54 @@
+<html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    <head>
+        <title>Строительная фирма</title>
+    </head>
+    <body>
+        <h1>Сотрудники</h1>
+         <input type="text" id="name" onkeyup="myFunction()" placeholder="Поиск сотрудника" title="Напишите имя">
+
+        <table style="width:100%" id="employees" class="outer_table">
+          <tr>
+              <th>ФИО</th>
+              <th>Дата рождения</th>
+              <th>Паспорт</th>
+              <th>Должность</th>
+              <th>Бригада</th>
+          </tr>
+            {% for employee in employees %}
+                <tr id="{{ employee.id }}">
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.birth_date }}</td>
+                    <td>{{ employee.passport }}</td>
+                    <td>{{ employee.position }}</td>
+                    <td>{{ employee.brigade.single().number }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <a href="employees/create">
+           <button>Добавить</button>
+        </a>
+    </body>
+
+    <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("name");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("employees");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+</html>

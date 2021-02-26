@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить сотрудника</title>
+</head>
+<body>
+    <h1>Добавить сотрудника</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.birth_date.label }}<br>
+            {{ form.birth_date(size=64, type='date') }}<br>
+            {% for error in form.birth_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.passport.label }}<br>
+            {{ form.passport(size=32) }}<br>
+            {% for error in form.passport.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.position.label }}<br>
+            {{ form.position(size=32) }}<br>
+            {% for error in form.position.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.brigade.label }}<br>
+            {{ form.brigade(size=1, type='number') }}<br>
+            {% for error in form.brigade.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% with errors = get_flashed_messages() %}
+        {% if errors %}
+            {% for error in errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
